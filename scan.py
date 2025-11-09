@@ -36,23 +36,23 @@ def scan(ip_target, port_target):
         # test with 172.65.251.78:22
         data = get_ssh_banner(ip_target, port_target, 3.0)
         if data:
-            print(data)
-            return
+            return {"status": "success", "data": data, "type": "SSH"}
 
     if port_target in (80, 443, 8080):
         # example with 104.21.5.178:80
         data = get_http_server(ip_target, port_target, 3.0)
         if data:
-            print(data)
-            return
+            return {"status": "success", "data": data, "type": "HTTP"}
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
             s.settimeout(3)
             s.connect((ip_target, port_target))
             print("OK")
+            return {"status": "success", "data": "Port ouvert", "type": "Generic"}
         except (TimeoutError, ConnectionRefusedError, OSError) as e:
             print(e)
+            return {"status": "error", "data": str(e), "type": "Error"}
 
 
 def scan_range(ip_target, port_start, port_end):
@@ -70,4 +70,4 @@ def scan_range(ip_target, port_start, port_end):
         print(f"Scanning port {port}...", end=" ")
         scan(ip_target, port)
 
-    print(f"\n=== Scan terminé ===")
+    print("\n=== Scan terminé ===")
