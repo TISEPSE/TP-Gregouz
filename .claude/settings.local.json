@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(cd:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Port scanner Flask app\n\n- Add Flask web application with form for IP and port input\n- Add scan.py with port scanning logic (SSH, HTTP, generic)\n- Add scanner.py CLI with --port and --range options\n- Add TO-DO.md with project steps\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Port scanner Flask app\n\n- Add Flask web application with form for IP and port input\n- Add scan.py with port scanning logic (SSH, HTTP, generic)\n- Add scanner.py CLI with --port and --range options\n- Add TO-DO.md with project steps\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

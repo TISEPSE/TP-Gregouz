@@ -12,29 +12,65 @@ def scan_result():
     global scan_result_global
 
     return f'''
-    <h1>Résultat du Scan</h1>
-    <p>IP: {scan_result_global["ip"]}</p>
-    <p>Port: {scan_result_global["port"]}</p>
-    <p>{scan_result_global["result"]["data"]} : {scan_result_global["result"]["type"]}</p>
-    <br>
-    <a href="/">← Retour</a>
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Résultat du Scan</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Résultat du Scan</h1>
+            <div class="result-item">
+                <span class="result-label">IP:</span>
+                <span class="result-value">{scan_result_global["ip"]}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Port:</span>
+                <span class="result-value">{scan_result_global["port"]}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Statut:</span>
+                <span class="result-value">{scan_result_global["result"]["data"]} : {scan_result_global["result"]["type"]}</span>
+            </div>
+            <a href="/" class="back-link">← Retour</a>
+        </div>
+    </body>
+    </html>
     '''
 
 @app.route("/")
 def hello_world():
     return '''
-    <h1>Port Scanner</h1>
-    <form action="/scan" method="POST">
-        <label for="ip">Adresse IP :</label>
-        <input type="text" id="ip" name="ip" placeholder="Ex: 192.168.1.1">
-        <br><br>
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Port Scanner</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Port Scanner</h1>
+            <form action="/scan" method="POST">
+                <div class="form-group">
+                    <label for="ip">Adresse IP :</label>
+                    <input type="text" id="ip" name="ip" placeholder="Ex: 192.168.1.1">
+                </div>
 
-        <label for="port">Port :</label>
-        <input type="text" id="port" name="port" placeholder="Ex: 80">
-        <br><br>
+                <div class="form-group">
+                    <label for="port">Port :</label>
+                    <input type="text" id="port" name="port" placeholder="Ex: 80">
+                </div>
 
-        <button type="submit">Scanner</button>
-    </form>
+                <button type="submit">Scanner</button>
+            </form>
+        </div>
+    </body>
+    </html>
     '''
 
 @app.route("/scan", methods=["POST"])
@@ -74,8 +110,22 @@ def scan_form():
 
     except Exception as e:
         return f'''
-        <h1>Erreur de validation</h1>
-        <p>{str(e)}</p>
-        <br>
-        <a href="/">← Retour</a>
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Erreur</title>
+            <link rel="stylesheet" href="/static/css/style.css">
+        </head>
+        <body>
+            <div class="container">
+                <h1>Erreur de validation</h1>
+                <div class="error-message">
+                    <p>{str(e)}</p>
+                </div>
+                <a href="/" class="back-link">← Retour</a>
+            </div>
+        </body>
+        </html>
         '''
