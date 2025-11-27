@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Port Scanner</h1>
+        <form action="/scan" method="POST">
+            <div class="form-group">
+                <label for="ip">Adresse IP :</label>
+                <input type="text" id="ip" name="ip" placeholder="Ex: 192.168.1.1">
+            </div>
+
+            <div class="form-group">
+                <label for="port">Port :</label>
+                <input type="text" id="port" name="port" placeholder="Ex: 80">
+            </div>
+
+            <button type="submit">Scanner</button>
+        </form>
+    </div>
+</body>
+
+</html>

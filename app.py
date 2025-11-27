@@ -1,17 +1,18 @@
 from scan import scan
 from scanner import valid_ipv4_address, valid_port
-from flask import Flask, request, redirect
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
 # Variable globale pour stocker le résultat
 scan_result_global = ""
 
+
 @app.route("/result")
 def scan_result():
     global scan_result_global
 
-    return f'''
+    return f"""
     <!DOCTYPE html>
     <html lang="fr">
     <head>
@@ -39,49 +40,23 @@ def scan_result():
         </div>
     </body>
     </html>
-    '''
+    """
+
 
 @app.route("/")
 def hello_world():
-    return '''
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Port Scanner</title>
-        <link rel="stylesheet" href="/static/css/style.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1>Port Scanner</h1>
-            <form action="/scan" method="POST">
-                <div class="form-group">
-                    <label for="ip">Adresse IP :</label>
-                    <input type="text" id="ip" name="ip" placeholder="Ex: 192.168.1.1">
-                </div>
+    return render_template("index.html")
 
-                <div class="form-group">
-                    <label for="port">Port :</label>
-                    <input type="text" id="port" name="port" placeholder="Ex: 80">
-                </div>
-
-                <button type="submit">Scanner</button>
-            </form>
-        </div>
-    </body>
-    </html>
-    '''
 
 @app.route("/scan", methods=["POST"])
 def scan_form():
     global scan_result_global
 
-    #Récupère les données du formulaire
+    # Récupère les données du formulaire
     ip = request.form.get("ip")
     port = request.form.get("port")
 
-    #Convertir le port en entier sinon ça marche pas zbi
+    # Convertir le port en entier sinon ça marche pas zbi
     port = int(port)
 
     # Vérif si port et ip sont valides
@@ -99,17 +74,13 @@ def scan_form():
         print("-----------------------------------")
 
         # Stocker le résultat dans la variable globale
-        scan_result_global = {
-            "ip": ip,
-            "port": port,
-            "result": result
-        }
+        scan_result_global = {"ip": ip, "port": port, "result": result}
 
         # Rediriger vers /result
         return redirect("/result")
 
     except Exception as e:
-        return f'''
+        return f"""
         <!DOCTYPE html>
         <html lang="fr">
         <head>
@@ -128,4 +99,4 @@ def scan_form():
             </div>
         </body>
         </html>
-        '''
+        """
