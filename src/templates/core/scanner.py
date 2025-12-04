@@ -1,7 +1,7 @@
 import argparse
 import ipaddress
 
-from scan import scan, scan_range
+from src.templates.core.scan import scan, scan_range
 
 
 def valid_ipv4_address(value):

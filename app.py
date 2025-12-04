@@ -1,8 +1,10 @@
-from scan import scan
-from scanner import valid_ipv4_address, valid_port
+from src.templates.core.scan import scan
+from src.templates.core.scanner import valid_ipv4_address, valid_port
 from flask import Flask, render_template, request, redirect
 
-app = Flask(__name__)
+app = Flask(__name__,
+            template_folder='src/templates',
+            static_folder='src/static')
 
 # Variable globale pour stocker le résultat
 scan_result_global = ""

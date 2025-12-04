@@ -202,7 +202,6 @@ label {
 form {
     display: flex;
     flex-direction: column;
-    border-radius: var(--md-radius-large);
     gap: var(--md-spacing-3);
 }
 
