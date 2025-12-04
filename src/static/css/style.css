@@ -661,3 +661,171 @@ a:focus-visible {
 .form-group:focus-within label {
     color: var(--md-primary);
 }
+
+/* ===================================
+   REGISTER/LOGIN FORM STYLES
+   =================================== */
+
+/* Card Header */
+.card-header {
+    text-align: center;
+    margin-bottom: var(--md-spacing-4);
+}
+
+.card-header .icon {
+    width: 72px;
+    height: 72px;
+    background: var(--md-primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto var(--md-spacing-2);
+    box-shadow: var(--md-elevation-2);
+}
+
+.card-header .icon .material-icons {
+    font-size: 36px;
+    color: var(--md-on-primary);
+}
+
+.card-header h1 {
+    margin-bottom: var(--md-spacing-1);
+}
+
+.card-header p {
+    margin-bottom: 0;
+}
+
+/* Input fields with icons */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .material-icons {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--md-text-hint);
+    transition: color var(--md-transition-standard) var(--md-easing-standard);
+    pointer-events: none;
+}
+
+.input-with-icon input {
+    padding-left: 44px;
+}
+
+.input-with-icon:focus-within .material-icons {
+    color: var(--md-primary);
+}
+
+/* Password and Email inputs */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--md-font-family);
+    font-size: var(--md-subheading);
+    font-weight: 400;
+    color: var(--md-text-primary);
+    background: var(--md-surface);
+    border: 1px solid var(--md-border);
+    border-radius: var(--md-radius-medium);
+    outline: none;
+    transition: border-color var(--md-transition-standard) var(--md-easing-standard),
+                box-shadow var(--md-transition-standard) var(--md-easing-standard);
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: var(--md-text-hint);
+    opacity: 1;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: var(--md-primary);
+    border-width: 2px;
+    padding: 15px;
+}
+
+.input-with-icon input[type="email"]:focus,
+.input-with-icon input[type="password"]:focus {
+    padding-left: 43px;
+}
+
+input[type="email"]:hover:not(:focus),
+input[type="password"]:hover:not(:focus) {
+    border-color: var(--md-border-hover);
+}
+
+/* Password toggle button */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--md-text-hint);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--md-transition-fast) var(--md-easing-standard);
+    box-shadow: none;
+}
+
+.password-toggle:hover {
+    color: var(--md-primary);
+    background: none;
+    box-shadow: none;
+}
+
+.password-toggle:active {
+    box-shadow: none;
+}
+
+/* Divider with text */
+.divider-text {
+    display: flex;
+    align-items: center;
+    margin: var(--md-spacing-3) 0;
+    color: var(--md-text-hint);
+    font-size: var(--md-body-2);
+}
+
+.divider-text::before,
+.divider-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--md-divider);
+}
+
+.divider-text span {
+    padding: 0 var(--md-spacing-2);
+}
+
+/* Footer text */
+.footer-text {
+    text-align: center;
+    color: var(--md-text-secondary);
+    font-size: var(--md-body-2);
+    margin: 0;
+}
+
+.footer-text a {
+    color: var(--md-primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0;
+}
+
+.footer-text a:hover {
+    color: var(--md-primary-dark);
+    text-decoration: underline;
+    background: none;
+}
