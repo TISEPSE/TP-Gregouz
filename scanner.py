@@ -1,7 +1,7 @@
 import argparse
 import ipaddress
 
-from src.templates.core.scan import scan, scan_range
+from src.core.scan import scan, scan_range
 
 
 def valid_ipv4_address(value):
@@ -30,7 +30,7 @@ def valid_port_range(value):
     Valide une plage de ports au format 'start-end' (ex: 20-80)
     """
     try:
-        start, end = value.split('-')
+        start, end = value.split("-")
         start_port = valid_port(start)
         end_port = valid_port(end)
 
@@ -47,17 +47,26 @@ def valid_port_range(value):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Scanner de ports pour une adresse IP"
+    parser = argparse.ArgumentParser(description="Scanner de ports pour une adresse IP")
+    parser.add_argument(
+        "-i",
+        "--ip",
+        type=valid_ipv4_address,
+        required=True,
+        help="L'adresse IP v4 cible",
     )
     parser.add_argument(
-        "-i", "--ip", type=valid_ipv4_address, required=True, help="L'adresse IP v4 cible"
+        "-p",
+        "--port",
+        nargs="+",
+        type=valid_port,
+        help="Le(s) port(s) cible(s) (0-65535)",
     )
     parser.add_argument(
-        "-p", "--port", nargs="+", type=valid_port, help="Le(s) port(s) cible(s) (0-65535)"
-    )
-    parser.add_argument(
-        "-r", "--range", type=valid_port_range, help="Plage de ports à scanner (ex: 20-80)"
+        "-r",
+        "--range",
+        type=valid_port_range,
+        help="Plage de ports à scanner (ex: 20-80)",
     )
     args = parser.parse_args()
 
