@@ -5,7 +5,7 @@ from src.auth import auth_blueprint
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='templates', static_folder='static')
     app.register_blueprint(forms_blueprint)
     app.register_blueprint(auth_blueprint)
     return app

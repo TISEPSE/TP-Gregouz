@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
+from src.db import USERS
 
 auth_blueprint = Blueprint("auth", __name__)
 
@@ -15,9 +16,16 @@ def register_get():
 def register():
     form = request.form.to_dict()
     password = form.get("password")
+    username = form.get("username")
+
+    if username in USERS:
+        return redirect(url_for("auth.register_get"))
+
     secure_password = generate_password_hash(password)
     print(f"Mot de passe de base => {password} : Mot de passe hashé: {secure_password}")
-    return render_template("register.html")
+
+    USERS[username] = secure_password
+    return redirect(url_for("auth.login_get"))
 
 #==============Login Route==============#
 
@@ -30,4 +38,5 @@ def login():
     email = request.form.get("email")
     mot_de_passe = request.form.get("password")
     print(f"Email reçu: {email}, Mot de passe reçu: {mot_de_passe}")
+
     return render_template("login.html")

@@ -213,7 +213,8 @@ form {
 
 /* Material Design Text Field - Classic Outlined Style */
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="username"] {
     width: 100%;
     padding: 16px;
     font-family: var(--md-font-family);
@@ -233,14 +234,16 @@ input[type="number"] {
 }
 
 input[type="text"]::placeholder,
-input[type="number"]::placeholder {
+input[type="number"]::placeholder,
+input[type="username"]::placeholder {
     color: var(--md-text-hint);
     opacity: 1;
 }
 
 /* Focus state - Simple color change */
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="username"]:focus {
     border-color: var(--md-primary);
     border-width: 2px;
     padding: 15px; /* Adjust padding to compensate for thicker border */
@@ -248,13 +251,15 @@ input[type="number"]:focus {
 
 /* Hover state - Subtle change */
 input[type="text"]:hover:not(:focus),
-input[type="number"]:hover:not(:focus) {
+input[type="number"]:hover:not(:focus),
+input[type="username"]:hover:not(:focus) {
     border-color: var(--md-border-hover);
 }
 
 /* Disabled state */
 input[type="text"]:disabled,
-input[type="number"]:disabled {
+input[type="number"]:disabled,
+input[type="username"]:disabled {
     background: var(--md-gray-100);
     color: var(--md-text-disabled);
     border-color: var(--md-gray-300);
@@ -712,7 +717,11 @@ a:focus-visible {
     pointer-events: none;
 }
 
-.input-with-icon input {
+.input-with-icon input[type="text"],
+.input-with-icon input[type="number"],
+.input-with-icon input[type="username"],
+.input-with-icon input[type="email"],
+.input-with-icon input[type="password"] {
     padding-left: 44px;
 }
 
@@ -720,7 +729,8 @@ a:focus-visible {
     color: var(--md-primary);
 }
 
-/* Password and Email inputs */
+/* Username, Password and Email inputs */
+input[type="username"],
 input[type="email"],
 input[type="password"] {
     width: 100%;
@@ -737,12 +747,14 @@ input[type="password"] {
                 box-shadow var(--md-transition-standard) var(--md-easing-standard);
 }
 
+input[type="username"]::placeholder,
 input[type="email"]::placeholder,
 input[type="password"]::placeholder {
     color: var(--md-text-hint);
     opacity: 1;
 }
 
+input[type="username"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: var(--md-primary);
@@ -750,11 +762,13 @@ input[type="password"]:focus {
     padding: 15px;
 }
 
+.input-with-icon input[type="username"]:focus,
 .input-with-icon input[type="email"]:focus,
 .input-with-icon input[type="password"]:focus {
     padding-left: 43px;
 }
 
+input[type="username"]:hover:not(:focus),
 input[type="email"]:hover:not(:focus),
 input[type="password"]:hover:not(:focus) {
     border-color: var(--md-border-hover);
