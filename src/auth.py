@@ -25,8 +25,15 @@ def register():
     print(f"Mot de passe de base => {password} : Mot de passe hashé: {secure_password}")
 
     USERS[username] = secure_password
-    return redirect(url_for("auth.login_get"))
-
+    
+    # Afficher tous les utilisateurs enregistrés du dictionnaire
+    print("\n=== Utilisateurs enregistrés ===")
+    for username in USERS:
+        print(f"Utilisateur: {username}, Mot de passe: {USERS[username]}")
+    print("=" * 32 + "\n")
+    
+    flash(f"Utilisateur {username} créé avec succès !", "success")
+    
 #==============Login Route==============#
 
 @auth_blueprint.get("/login")
@@ -35,8 +42,12 @@ def login_get():
 
 @auth_blueprint.post("/login")
 def login():
-    email = request.form.get("email")
-    mot_de_passe = request.form.get("password")
-    print(f"Email reçu: {email}, Mot de passe reçu: {mot_de_passe}")
+    username = request.form.get("email")
+    password = request.form.get("password")
+
+    if username not in USERS:
+        return redirect(url_for("auth.login_get"))
+
+    print(f"Email reçu: {username}, Mot de passe reçu: {password}")
 
     return render_template("login.html")
