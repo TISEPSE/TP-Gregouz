@@ -29,25 +29,30 @@ def register():
     # Afficher tous les utilisateurs enregistrés du dictionnaire
     print("\n=== Utilisateurs enregistrés ===")
     for username in USERS:
-        print(f"Utilisateur: {username}, Mot de passe: {USERS[username]}")
+        print(f"Utilisateur: {username}")
     print("=" * 32 + "\n")
     
-    flash(f"Utilisateur {username} créé avec succès !", "success")
+    return redirect(url_for('auth.login_page'))
+    
     
 #==============Login Route==============#
 
 @auth_blueprint.get("/login")
-def login_get():
+def login_page():
     return render_template("login.html")
 
 @auth_blueprint.post("/login")
 def login():
-    username = request.form.get("email")
+    username = request.form.get("username")
     password = request.form.get("password")
 
     if username not in USERS:
-        return redirect(url_for("auth.login_get"))
+        return redirect(url_for("auth.login_page"))
+    
+    secure_password = USERS[username]
 
-    print(f"Email reçu: {username}, Mot de passe reçu: {password}")
+    if check_password_hash(secure_password, password):
 
-    return render_template("login.html")
+        return redirect(url_for('forms.home'))
+    else: 
+        return redirect(url_for("auth.login_page"))

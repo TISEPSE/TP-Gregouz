@@ -64,7 +64,7 @@ def scan_result():
 
 
 @forms_blueprint.route("/")
-def hello_world():
+def home():
     return render_template("index.html")
 
 
