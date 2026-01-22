@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from src.db import USERS
+from src.services.users import add_user
 
 auth_blueprint = Blueprint("auth", __name__)
 
@@ -18,21 +18,15 @@ def register():
     password = form.get("password")
     username = form.get("username")
 
-    if username in USERS:
-        return redirect(url_for("auth.register_get"))
-
     secure_password = generate_password_hash(password)
+    print(f"User crée: '{username}'")
     print(f"Mot de passe de base => {password} : Mot de passe hashé: {secure_password}")
 
-    USERS[username] = secure_password
-    
-    # Afficher tous les utilisateurs enregistrés du dictionnaire
-    print("\n=== Utilisateurs enregistrés ===")
-    for username in USERS:
-        print(f"Utilisateur: {username}")
-    print("=" * 32 + "\n")
-    
-    return redirect(url_for('auth.login_page'))
+    if add_user(username, secure_password):
+        print("Utilisateur ajouter à la base de donnée")
+        return redirect(url_for('auth.login_page'))
+    else:
+        return redirect(url_for("auth.register_get"))
     
     
 #==============Login Route==============#
@@ -46,13 +40,13 @@ def login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    if username not in USERS:
+    user = get_user(username)
+    if user is None:
         return redirect(url_for("auth.login_page"))
     
-    secure_password = USERS[username]
+    secure_password = user[2]
 
     if check_password_hash(secure_password, password):
-
-        return redirect(url_for('forms.home'))
+        return redirect('/')
     else: 
         return redirect(url_for("auth.login_page"))
