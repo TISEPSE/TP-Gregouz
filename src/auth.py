@@ -24,11 +24,9 @@ def register():
 
     if is_user_in_db(username):
         flash("L'utilisateur existe déjà", "error")
-        print("L'utilisateur existe déjà en base")
         return redirect(url_for("auth.register_get"))
     
     elif add_user(username, secure_password):
-        print("Utilisateur ajouter à la base de donnée")
         flash("Inscription réussie !", "success")
         return redirect(url_for('auth.login_page'))
     
@@ -56,8 +54,7 @@ def login():
     secure_password = user[2]
 
     if check_password_hash(secure_password, password):
-        # Stocker le message dans la session pour l'afficher sur la page suivante
-        session['login_success_message'] = "Connexion réussie"
+        flash("Connexion réussie", "success")
         return redirect('/')
     else: 
         flash("Mot de passe incorrect", "error")

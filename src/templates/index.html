@@ -28,26 +28,13 @@
         </form>
     </div>
 
-    <!-- Container pour les messages de session (caché) -->
-    <div id="session-messages" style="display: none;">
-        {{
-            {
-                'login_success': session.pop('login_success_message', None)
-            }|tojson
-        }}
+    <!-- Container pour les messages Flash (caché) -->
+    <div id="flask-messages" style="display: none;">
+        {{ get_flashed_messages(with_categories=True)|tojson }}
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/static/js/sweetalert2-config.js"></script>
-    <script>
-        // Afficher le message de succès de connexion si présent
-        document.addEventListener('DOMContentLoaded', function() {
-            const messages = JSON.parse(document.getElementById('session-messages').textContent);
-            if (messages.login_success) {
-                showSuccessToast(messages.login_success);
-            }
-        });
-    </script>
 </body>
 
 </html>
