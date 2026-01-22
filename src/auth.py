@@ -47,6 +47,7 @@ def login():
     password = request.form.get("password")
 
     user = get_user(username)
+
     if user is None:
         flash("Utilisateur non trouvé", "error")
         return redirect(url_for("auth.login_page"))
@@ -54,8 +55,17 @@ def login():
     secure_password = user[2]
 
     if check_password_hash(secure_password, password):
+        session["name"] = username
         flash("Connexion réussie", "success")
         return redirect('/')
     else: 
         flash("Mot de passe incorrect", "error")
         return redirect(url_for("auth.login_page"))
+
+#==============Logout Route==============#
+
+@auth_blueprint.get("/logout")
+def logout():
+    session.clear()
+    flash("Déconnexion réussie", "success")
+    return redirect(url_for("auth.login_page"))

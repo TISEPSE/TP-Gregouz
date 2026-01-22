@@ -36,3 +36,5 @@ def get_user(name):
         cursor = conn.cursor()
         cursor.execute("SELECT id, name, password, created_at, updated_at FROM users WHERE name = ?", (name,))
         return cursor.fetchone()
+    
+

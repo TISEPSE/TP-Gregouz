@@ -843,3 +843,54 @@ input[type="password"]:hover:not(:focus) {
     text-decoration: underline;
     background: none;
 }
+
+/* ===================================
+   LOGOUT BUTTON STYLES - FIXED POSITIONING
+   =================================== */
+
+.logout-btn {
+    position: fixed;
+    top: var(--md-spacing-3);
+    right: var(--md-spacing-3);
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--md-spacing-1) var(--md-spacing-2);
+    font-size: var(--md-body-2);
+    font-weight: 500;
+    color: var(--md-on-primary);
+    background: var(--md-primary);
+    border: none;
+    border-radius: var(--md-radius-medium);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--md-transition-standard) var(--md-easing-standard);
+    box-shadow: var(--md-elevation-1);
+    height: 40px;
+    z-index: 1000;
+}
+
+.logout-btn:hover {
+    background: var(--md-primary-dark);
+    box-shadow: var(--md-elevation-2);
+    color: var(--md-on-primary);
+}
+
+.logout-btn:active {
+    background: var(--md-primary-dark);
+    box-shadow: var(--md-elevation-1);
+    color: var(--md-on-primary);
+}
+
+.logout-btn:focus-visible {
+    outline: 2px solid var(--md-primary-dark);
+    outline-offset: 2px;
+}
+
+/* Hide logout button when not logged in */
+.logout-btn.hidden {
+    display: none;
+}
