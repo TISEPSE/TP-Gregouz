@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Port Scanner</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="/static/css/sweetalert2-custom.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
@@ -25,6 +27,27 @@
             <button type="submit">Scanner</button>
         </form>
     </div>
+
+    <!-- Container pour les messages de session (caché) -->
+    <div id="session-messages" style="display: none;">
+        {{
+            {
+                'login_success': session.pop('login_success_message', None)
+            }|tojson
+        }}
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/js/sweetalert2-config.js"></script>
+    <script>
+        // Afficher le message de succès de connexion si présent
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = JSON.parse(document.getElementById('session-messages').textContent);
+            if (messages.login_success) {
+                showSuccessToast(messages.login_success);
+            }
+        });
+    </script>
 </body>
 
 </html>

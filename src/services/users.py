@@ -20,6 +20,7 @@ def add_user(name, password):
         print("Ce nom d'utilisateur existe déja")
         return False
 
+# --- Select ---
 
 def is_user_in_db(name):
     """Vérifie si l'utilisateur existe déja dans la base de donnée."""
@@ -28,3 +29,10 @@ def is_user_in_db(name):
         cursor.execute("SELECT 1 FROM users WHERE name = ?", (name,))
         result = cursor.fetchone()
         return result[0] if result else None
+
+def get_user(name):
+    """Récupère toutes les infos d'un users en cherchant son nom"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, password, created_at, updated_at FROM users WHERE name = ?", (name,))
+        return cursor.fetchone()

@@ -21,6 +21,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# DB
-*sql
+# Database files
+*.sql
 *.sqlite
+*.sqlite3
+*.db
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
