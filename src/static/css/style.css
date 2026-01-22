@@ -848,7 +848,7 @@ input[type="password"]:hover:not(:focus) {
    LOGOUT BUTTON STYLES - FIXED POSITIONING
    =================================== */
 
-.logout-btn {
+.mdc-logout-button {
     position: fixed;
     top: var(--md-spacing-3);
     right: var(--md-spacing-3);
@@ -873,24 +873,71 @@ input[type="password"]:hover:not(:focus) {
     z-index: 1000;
 }
 
-.logout-btn:hover {
+.mdc-logout-button:hover {
     background: var(--md-primary-dark);
     box-shadow: var(--md-elevation-2);
     color: var(--md-on-primary);
 }
 
-.logout-btn:active {
+.mdc-logout-button:active {
     background: var(--md-primary-dark);
     box-shadow: var(--md-elevation-1);
     color: var(--md-on-primary);
 }
 
-.logout-btn:focus-visible {
+.mdc-logout-button:focus-visible {
     outline: 2px solid var(--md-primary-dark);
     outline-offset: 2px;
 }
 
 /* Hide logout button when not logged in */
-.logout-btn.hidden {
+.mdc-logout-button.hidden {
+    display: none;
+}
+
+/* Info button - positioned below logout button */
+.mdc-info-button {
+    position: fixed;
+    top: calc(var(--md-spacing-3) + 56px); /* Position below logout button */
+    right: var(--md-spacing-3);
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--md-spacing-1) var(--md-spacing-2);
+    font-size: var(--md-body-2);
+    font-weight: 500;
+    color: var(--md-on-primary);
+    background: var(--md-success); /* Green color */
+    border: none;
+    border-radius: var(--md-radius-medium);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--md-transition-standard) var(--md-easing-standard);
+    box-shadow: var(--md-elevation-1);
+    height: 40px;
+    z-index: 999;
+}
+
+.mdc-info-button:hover {
+    background: var(--md-success-dark);
+    box-shadow: var(--md-elevation-2);
+    color: var(--md-on-primary);
+}
+
+.mdc-info-button:active {
+    background: var(--md-success-dark);
+    box-shadow: var(--md-elevation-1);
+    color: var(--md-on-primary);
+}
+
+.mdc-info-button:focus-visible {
+    outline: 2px solid var(--md-success-dark);
+    outline-offset: 2px;
+}
+
+.mdc-info-button.hidden {
     display: none;
 }

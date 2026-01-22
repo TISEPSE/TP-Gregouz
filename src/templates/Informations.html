@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> {{%session.name%}} - Informations </title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Informations du compte ultra secret</h1>
+            <div class="result-item">
+                <span class="result-label">Nom</span>
+                <span class="result-value">{{%session.name%}}</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Port:</span>
+                <span class="result-value">{scan_result_global["port"]}</span>
+            </div>
+            </div>
+            <a href="/" class="back-link">Retour</a>
+        </div>
+    </body>
+    </html>

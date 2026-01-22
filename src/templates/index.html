@@ -11,7 +11,14 @@
 </head>
 
 <body>
-    <a href="/logout" class="logout-btn">Déconnexion</a>
+    {%if session.name%}
+    <h1>Salut ! {{session.name}} </h1>
+    <a href="/logout" class="mdc-logout-button">Déconnexion</a>
+    <a href="/infos" class="mdc-info-button">Information</a>
+    {%else%}
+    <h1>Tu peux te connecter sur : <a href="/login">connexion</a></h1>
+    {%endif%}
+
     <div class="container">
         <h1>Port Scanner</h1>
         <form action="/scan" method="POST">

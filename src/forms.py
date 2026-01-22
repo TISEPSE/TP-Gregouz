@@ -56,7 +56,7 @@ def scan_result():
                 <span class="result-label">Statut:</span>
                 <span class="result-value">{scan_result_global["result"]["data"]} : {scan_result_global["result"]["type"]}</span>
             </div>
-            <a href="/" class="back-link">← Retour</a>
+            <a href="/" class="back-link">Retour</a>
         </div>
     </body>
     </html>
