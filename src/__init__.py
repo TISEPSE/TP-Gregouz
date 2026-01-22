@@ -3,6 +3,7 @@ import os
 
 from src.forms import forms_blueprint
 from src.auth import auth_blueprint
+from src.informations import info_blueprint
 
 
 def create_app():
@@ -11,4 +12,5 @@ def create_app():
                 static_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'))
     app.register_blueprint(forms_blueprint)
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(info_blueprint)
     return app
