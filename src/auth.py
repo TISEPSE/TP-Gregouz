@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from src.services.users import add_user
+from src.services.users import add_user, is_user_in_db
 
 auth_blueprint = Blueprint("auth", __name__)
 
@@ -22,9 +22,14 @@ def register():
     print(f"User crée: '{username}'")
     print(f"Mot de passe de base => {password} : Mot de passe hashé: {secure_password}")
 
-    if add_user(username, secure_password):
+    if is_user_in_db(username):
+        print("L'utilisateur existe déjà en base")
+        return redirect(url_for("auth.login_page"))
+    
+    elif add_user(username, secure_password):
         print("Utilisateur ajouter à la base de donnée")
         return redirect(url_for('auth.login_page'))
+    
     else:
         return redirect(url_for("auth.register_get"))
     
