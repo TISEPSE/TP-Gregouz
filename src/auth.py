@@ -61,6 +61,7 @@ def login():
     else: 
         flash("Mot de passe incorrect", "error")
         return redirect(url_for("auth.login_page"))
+    
 
 #==============Logout Route==============#
 
