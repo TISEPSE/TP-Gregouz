@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from src.services.users import add_user, is_user_in_db, get_user
+from src.services.sessions import create_session, delete_session, get_session
 
 auth_blueprint = Blueprint("auth", __name__)
 
@@ -52,6 +53,18 @@ def login():
         flash("Utilisateur non trouvé", "error")
         return redirect(url_for("auth.login_page"))
     
+    session_id = create_session(username)
+
+    response = redirect(url_for("dashboard.home"))
+    response.set_cookie(
+        "session_id",
+        session_id,
+        httponly=True,
+        samesite="Lax",
+        max_age="86400",
+        secure=True
+    )
+    
     secure_password = user[2]
 
     if check_password_hash(secure_password, password):
@@ -67,6 +80,16 @@ def login():
 
 @auth_blueprint.get("/logout")
 def logout():
-    session.clear()
+    # Récupérer le session_id depuis le cookie
+    session_id = request.cookies.get("session_id")
+
+    if session_id:
+        # Supprimer la session côté serveur
+        delete_session(session_id)
+
+    # Créer une réponse qui supprime le cookie
+    response = redirect(url_for("auth.login_page"))
+    response.delete_cookie("session_id")
     flash("Déconnexion réussie", "success")
-    return redirect(url_for("auth.login_page"))
+
+    return response

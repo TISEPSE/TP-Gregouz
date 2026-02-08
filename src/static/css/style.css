@@ -151,6 +151,80 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Auth tile (dashboard) */
+.auth-tile {
+    width: 100%;
+    max-width: 520px;
+    background: var(--md-surface);
+    border-radius: var(--md-radius-medium);
+    padding: var(--md-spacing-6);
+    box-shadow: var(--md-elevation-2);
+    border: 1px solid var(--md-divider);
+    text-align: center;
+}
+
+.auth-tile__badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--md-primary-50);
+    color: var(--md-primary-dark);
+    font-weight: 500;
+    font-size: var(--md-caption);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: var(--md-spacing-2);
+}
+
+.auth-tile__header p {
+    margin-bottom: var(--md-spacing-4);
+}
+
+.auth-tile__actions {
+    display: flex;
+    gap: var(--md-spacing-2);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.auth-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    padding: 12px 18px;
+    border-radius: var(--md-radius-small);
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: var(--md-button-elevation);
+    transition: background var(--md-transition-fast) var(--md-easing-standard),
+                box-shadow var(--md-transition-fast) var(--md-easing-standard),
+                transform var(--md-transition-fast) var(--md-easing-standard);
+}
+
+.auth-button--primary {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+}
+
+.auth-button--secondary {
+    background: var(--md-gray-100);
+    color: var(--md-text-primary);
+}
+
+.auth-button:hover {
+    box-shadow: var(--md-button-elevation-hover);
+    transform: translateY(-1px);
+}
+
+.auth-button--primary:hover {
+    background: var(--md-primary-dark);
+}
+
+.auth-button--secondary:hover {
+    background: var(--md-gray-200);
+}
+
 /* Main container - Classic Material Design Card */
 .container {
     width: 100%;
@@ -176,6 +250,45 @@ h1 {
     margin-bottom: var(--md-spacing-4);
     text-align: center;
     letter-spacing: 0;
+}
+
+/* Simple landing page (index) links */
+body > h1 {
+    margin-bottom: var(--md-spacing-3);
+}
+
+body > a {
+    display: inline-block;
+    margin: 0 var(--md-spacing-1);
+    padding: 10px 18px;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    text-decoration: none;
+    border-radius: var(--md-radius-small);
+    box-shadow: var(--md-button-elevation);
+    transition: background var(--md-transition-fast) var(--md-easing-standard),
+                box-shadow var(--md-transition-fast) var(--md-easing-standard),
+                transform var(--md-transition-fast) var(--md-easing-standard);
+}
+
+body > a:hover {
+    background: var(--md-primary-dark);
+    box-shadow: var(--md-button-elevation-hover);
+    transform: translateY(-1px);
+}
+
+body > a:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    body > a {
+        display: block;
+        width: 100%;
+        max-width: 240px;
+        margin: var(--md-spacing-1) auto;
+        text-align: center;
+    }
 }
 
 p {

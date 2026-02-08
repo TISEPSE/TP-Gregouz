@@ -1,10 +1,11 @@
 import ipaddress
 from src.core.scan import scan
-from flask import render_template, request, redirect, Blueprint
+from flask import render_template, request, redirect, Blueprint, url_for
+from src.services.sessions import get_current_user
 
 
 # Variable globale pour stocker le résultat
-forms_blueprint = Blueprint("forms", __name__)
+dashboard_blueprint = Blueprint("dashboard", __name__)
 
 scan_result_global = ""
 
@@ -28,7 +29,7 @@ def valid_port(value):
     return port
 
 
-@forms_blueprint.route("/result")
+@dashboard_blueprint.route("/result")
 def scan_result():
     global scan_result_global
 
@@ -63,15 +64,22 @@ def scan_result():
     """
 
 
-@forms_blueprint.route("/")
+@dashboard_blueprint.route("/dashboard")
 def home():
-    return render_template("index.html")
+
+    current_user = get_current_user(request)
+    return render_template("dashboard.html", user=current_user)
 
 
-@forms_blueprint.route("/scan", methods=["POST"])
+@dashboard_blueprint.route("/scan", methods=["POST"])
 def scan_form():
     global scan_result_global
 
+    current_user = get_current_user(request)
+
+    if not current_user:
+        return redirect(url_for("auth.login_page"))
+    
     # Récupère les données du formulaire
     ip = request.form.get("ip")
     port = request.form.get("port")
