@@ -34,8 +34,8 @@ def register():
     else:
         flash("Erreur lors de l'inscription", "error")
         return redirect(url_for("auth.register_get"))
-    
-    
+
+
 #==============Login Route==============#
 
 @auth_blueprint.get("/login")
@@ -53,24 +53,23 @@ def login():
         flash("Utilisateur non trouvé", "error")
         return redirect(url_for("auth.login_page"))
     
-    session_id = create_session(username)
-
-    response = redirect(url_for("dashboard.home"))
-    response.set_cookie(
-        "session_id",
-        session_id,
-        httponly=True,
-        samesite="Lax",
-        max_age="86400",
-        secure=True
-    )
-    
     secure_password = user[2]
 
     if check_password_hash(secure_password, password):
+        session_id = create_session(username)
         session["name"] = username
         flash("Connexion réussie", "success")
-        return redirect('/')
+
+        response = redirect(url_for("dashboard.home"))
+        response.set_cookie(
+            "session_id",
+            session_id,
+            httponly=True,
+            samesite="Lax",
+            max_age=86400,
+            secure=True
+        )
+        return response
     else: 
         flash("Mot de passe incorrect", "error")
         return redirect(url_for("auth.login_page"))

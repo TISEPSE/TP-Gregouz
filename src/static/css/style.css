@@ -225,6 +225,23 @@ body {
     background: var(--md-gray-200);
 }
 
+.auth-button--danger {
+    background: var(--md-error);
+    color: var(--md-on-primary);
+}
+
+.auth-button--danger:hover {
+    background: var(--md-error-dark);
+}
+
+/* Auth tile actions - flex layout for button arrangement */
+.auth-tile__actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--md-spacing-2);
+    justify-content: center;
+}
+
 /* Main container - Classic Material Design Card */
 .container {
     width: 100%;

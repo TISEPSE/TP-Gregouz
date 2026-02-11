@@ -1,4 +1,5 @@
 import ipaddress
+from functools import wraps
 from src.core.scan import scan
 from flask import render_template, request, redirect, Blueprint, url_for
 from src.services.sessions import get_current_user
@@ -8,6 +9,19 @@ from src.services.sessions import get_current_user
 dashboard_blueprint = Blueprint("dashboard", __name__)
 
 scan_result_global = ""
+
+def login_required(f):
+    """
+    Décorateur qui protège une route.
+    Redirige vers /login si l'utilisateur n'est pas connecté.
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        current_user = get_current_user(request)
+        if not current_user:
+            return redirect(url_for("auth.login_page"))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def valid_ipv4_address(value):
@@ -65,13 +79,15 @@ def scan_result():
 
 
 @dashboard_blueprint.route("/dashboard")
-def home():
+@login_required
 
+def home():
     current_user = get_current_user(request)
     return render_template("dashboard.html", user=current_user)
 
 
 @dashboard_blueprint.route("/scan", methods=["POST"])
+@login_required
 def scan_form():
     global scan_result_global
 
