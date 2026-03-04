@@ -15,12 +15,6 @@ source venv/bin/activate
 ls -la migrator.py migrations src/services/sessions.py alembic.ini alembic/versions
 ```
 
-Points à dire:
-- `migrator.py` = outil custom demandé (status/up/down/create).
-- `migrations/` = migrations SQL avec `-- UP` / `-- DOWN`.
-- `src/services/sessions.py` = sessions persistées en base SQLite.
-- `alembic/` = partie 4 avec migrations Alembic.
-
 ## 3. Partie 2/3 - Migrator custom
 
 ### 3.1 Remettre une base propre
@@ -91,9 +85,6 @@ ls -la migrations
 rm -f migrations/003_demo_migration.sql
 ```
 
-Point à dire:
-- la commande crée bien le prochain numéro automatiquement.
-
 ## 5. Partie 3 - Sessions persistées en DB
 
 ```bash
@@ -106,10 +97,6 @@ print("deleted:", delete_session(sid))
 print("session_after_delete:", get_session(sid) is None)
 PY
 ```
-
-Point à dire:
-- avant: dictionnaire en mémoire (perdu au redémarrage)
-- maintenant: table `sessions` SQLite, donc persistant
 
 ## 6. Partie 4 - Alembic
 
@@ -154,10 +141,3 @@ Attendu:
 - `alembic.ini`
 - `alembic/versions/559c82cc57b2_create_users_table.py`
 - `alembic/versions/e6470c92095b_create_sessions_table.py`
-
-## 8. Résumé oral (30 secondes)
-
-- J’ai implémenté un migrator custom SQLite avec `status/up/down/create`.
-- J’ai créé 2 migrations SQL (`users`, `sessions`) avec sections `UP/DOWN`.
-- J’ai remplacé le stockage mémoire des sessions par SQLite.
-- J’ai aussi mis en place Alembic, créé 2 révisions, et testé `upgrade/downgrade/current/history`.
