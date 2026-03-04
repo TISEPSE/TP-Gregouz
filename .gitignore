@@ -23,6 +23,7 @@ Thumbs.db
 
 # Database files
 *.sql
+!migrations/*.sql
 *.sqlite
 *.sqlite3
 *.db
