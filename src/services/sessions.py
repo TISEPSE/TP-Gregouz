@@ -2,7 +2,8 @@ import secrets
 from datetime import datetime, timedelta
 from functools import wraps
 from flask import url_for, redirect, request
-from src.db import get_connection
+from src.db import db
+from src.models import Session
 
 # Durée de vie d'une session
 SESSION_LIFETIME = timedelta(minutes=1440)
@@ -38,16 +39,14 @@ def create_session(user_id: str) -> str:
     created_at = datetime.now()
     expires_at = created_at + SESSION_LIFETIME
 
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
-            """
-            INSERT INTO sessions (session_id, user_id, created_at, expires_at)
-            VALUES (?, ?, ?, ?)
-            """,
-            (session_id, user_id, created_at.isoformat(), expires_at.isoformat()),
-        )
-        conn.commit()
+    session = Session(
+        session_id=session_id,
+        user_id=user_id,
+        created_at=created_at,
+        expires_at=expires_at,
+    )
+    db.session.add(session)
+    db.session.commit()
 
     return session_id
 
@@ -57,33 +56,22 @@ def get_session(session_id: str) -> dict | None:
     Récupère les données d'une session.
     Retourne None si la session n'existe pas ou a expiré.
     """
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
-            """
-            SELECT user_id, created_at, expires_at
-            FROM sessions
-            WHERE session_id = ?
-            """,
-            (session_id,),
-        )
-        row = cursor.fetchone()
-
-    if row is None:
+    session = db.session.query(Session).filter_by(session_id=session_id).first()
+    if session is None:
         return None
 
-    session = {
-        "user_id": row[0],
-        "created_at": datetime.fromisoformat(row[1]),
-        "expires_at": datetime.fromisoformat(row[2]),
+    payload = {
+        "user_id": session.user_id,
+        "created_at": session.created_at,
+        "expires_at": session.expires_at,
     }
 
     # Vérifier si la session a expiré
-    if datetime.now() > session["expires_at"]:
+    if datetime.now() > payload["expires_at"]:
         delete_session(session_id)
         return None
 
-    return session
+    return payload
 
 
 def delete_session(session_id: str) -> bool:
@@ -91,11 +79,9 @@ def delete_session(session_id: str) -> bool:
     Supprime une session (déconnexion).
     Retourne True si la session existait.
     """
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM sessions WHERE session_id = ?", (session_id,))
-        conn.commit()
-        return cursor.rowcount > 0
+    deleted = db.session.query(Session).filter_by(session_id=session_id).delete()
+    db.session.commit()
+    return deleted > 0
 
 def get_current_user(request) -> str | None:
     """

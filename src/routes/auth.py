@@ -53,7 +53,7 @@ def login():
         flash("Utilisateur non trouvé", "error")
         return redirect(url_for("auth.login_page"))
     
-    secure_password = user[2]
+    secure_password = user.password
 
     if check_password_hash(secure_password, password):
         session_id = create_session(username)

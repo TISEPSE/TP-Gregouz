@@ -1,22 +1,19 @@
-import sqlite3
-import os
+from sqlalchemy.exc import IntegrityError
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "users.sqlite")
-
-def get_connection():
-    return sqlite3.connect(DB_PATH)
+from src.db import db
+from src.models import User
 
 # --- Insert ---
 
 def add_user(name, password):
     """"Ajoute un utilisateur dans la base de donnée"""
     try:
-        with get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (name, password) VALUES (?,?)", (name, password))
-            conn.commit()
-            return True
-    except sqlite3.IntegrityError:
+        user = User(name=name, password=password)
+        db.session.add(user)
+        db.session.commit()
+        return True
+    except IntegrityError:
+        db.session.rollback()
         print("Ce nom d'utilisateur existe déja")
         return False
 
@@ -24,17 +21,9 @@ def add_user(name, password):
 
 def is_user_in_db(name):
     """Vérifie si l'utilisateur existe déja dans la base de donnée."""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT 1 FROM users WHERE name = ?", (name,))
-        result = cursor.fetchone()
-        return result[0] if result else None
+    return db.session.query(User.id).filter_by(name=name).first() is not None
 
 def get_user(name):
     """Récupère toutes les infos d'un users en cherchant son nom"""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, name, password, created_at, updated_at FROM users WHERE name = ?", (name,))
-        return cursor.fetchone()
+    return db.session.query(User).filter_by(name=name).first()
     
-

@@ -46,3 +46,9 @@
 
 4. Alice installe les dependances le 23 fevrier. Bob installe les dependances le 3 mars. Vis a vis du fichier requirements.txt ils ont bien les memes versions mais ils observent quand meme des comportements différents. Pourquoi ?
    - Les dépendances de leurs dépendances (dépendances transitives) ont changé entre les deux dates. Par exemple Flask 3.1.2 dépend de Werkzeug sans version fixée, et Werkzeug a peut-être été mis à jour entre les deux installations. La solution : utiliser `pip freeze > requirements.txt` pour figer **toutes** les versions, y compris les transitives.
+
+---
+
+# Flask-SQLAlchemy
+
+Flask‑SQLAlchemy sert à intégrer SQLAlchemy à Flask avec une configuration centralisée (URI, options) et une gestion automatique du contexte d’application. Concrètement, il fournit un objet `db` partagé, le `db.Model` pour définir les modèles, et un `db.session` déjà scoped à la requête, ce qui simplifie l’accès à la base dans tout le projet.

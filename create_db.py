@@ -1,21 +1,13 @@
-import sqlite3
+from src import create_app
+from src.db import db
+from src import models  # noqa: F401
 
-DB_PATH = "users.sqlite"
 
 def create_database():
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL,
-                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-                )
-                """)
-        conn.commit()
-    print(f"'{DB_PATH}', crée avec succès !")
+    app = create_app()
+    with app.app_context():
+        db.create_all()
+    print(\"Base de données initialisée avec succès !\")
 
 if __name__ == "__main__":
     create_database()
